@@ -1,6 +1,5 @@
 package com.virgo.mart;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -10,13 +9,14 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.virgo.mart.common.BaseActivity;
 import com.virgo.mart.common.util.LogUtils;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
 
     private static final String TAG                 = "SplashActivity";
     private static final int SPLASH_TIME_MAX        = 5100; // ms
@@ -41,7 +41,7 @@ public class SplashActivity extends Activity {
     private void init() {
         mSplashTimer = new Timer();
         mCountDownTimer = new SplashCountDownTimer(SPLASH_TIME_MAX, SPLASH_TIME_INTERVEL);
-        mImageSplash = findViewById(R.id.splash_image);
+        mImageSplash = (ImageView) findViewById(R.id.splash_image);
         switch (new Random().nextInt(3) + 1) {
             case SPLASH_IMAGE_BLUE:
                 mImageSplash.setImageResource(R.drawable.splash_whale_blue);
@@ -53,7 +53,7 @@ public class SplashActivity extends Activity {
                 mImageSplash.setImageResource(R.drawable.splash_whale_purple);
                 break;
         }
-        mTvSkip = findViewById(R.id.skip_text);
+        mTvSkip = (TextView) findViewById(R.id.skip_text);
         mTvSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
