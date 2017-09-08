@@ -1,8 +1,11 @@
 package com.virgo.mart;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -16,7 +19,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends AppCompatActivity {
 
     private static final String TAG                 = "SplashActivity";
     private static final int SPLASH_TIME_MAX        = 5100; // ms
@@ -27,7 +30,7 @@ public class SplashActivity extends BaseActivity {
 
     private Timer mSplashTimer;
     private SplashCountDownTimer mCountDownTimer;
-    private ImageView mImageSplash;
+    private View mRootView;
     private TextView mTvSkip;
     private boolean isStarted;
 
@@ -41,16 +44,16 @@ public class SplashActivity extends BaseActivity {
     private void init() {
         mSplashTimer = new Timer();
         mCountDownTimer = new SplashCountDownTimer(SPLASH_TIME_MAX, SPLASH_TIME_INTERVEL);
-        mImageSplash = (ImageView) findViewById(R.id.splash_image);
+        mRootView = findViewById(R.id.splash_root);
         switch (new Random().nextInt(3) + 1) {
             case SPLASH_IMAGE_BLUE:
-                mImageSplash.setImageResource(R.drawable.splash_whale_blue);
+                mRootView.setBackgroundResource(R.drawable.splash_whale_blue);
                 break;
             case SPLASH_IMAGE_YELLOW:
-                mImageSplash.setImageResource(R.drawable.splash_whale_yellow);
+                mRootView.setBackgroundResource(R.drawable.splash_whale_yellow);
                 break;
             case SPLASH_IMAGE_PURPLE:
-                mImageSplash.setImageResource(R.drawable.splash_whale_purple);
+                mRootView.setBackgroundResource(R.drawable.splash_whale_purple);
                 break;
         }
         mTvSkip = (TextView) findViewById(R.id.skip_text);
