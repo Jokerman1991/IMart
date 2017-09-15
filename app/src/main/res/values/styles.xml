@@ -113,12 +113,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="CollapsingToolbarTitleStyle"
-        parent="@android:style/TextAppearance">
+    <style name="CollapsingToolbarTitleStyle" parent="@android:style/TextAppearance">
         <item name="android:textColor">@android:color/transparent</item>
     </style>
-    <style name="CollapsingToolbarTitleStyle_collapsed"
-        parent="@android:style/TextAppearance">
+
+    <style name="CollapsingToolbarTitleStyle_collapsed" parent="@android:style/TextAppearance">
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">@dimen/textSize_16</item>
     </style>
@@ -132,6 +131,7 @@
 
     <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--在Android 4.4之前的版本上运行，直接跟随系统主题-->
+        <item name="android:windowBackground">@android:color/transparent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

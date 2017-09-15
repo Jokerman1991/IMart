@@ -1,12 +1,15 @@
 package com.virgo.mart;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.virgo.mart.common.util.LogUtils;
@@ -15,7 +18,11 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SplashActivity extends AppCompatActivity {
+/**
+ * Created by wangdeyu on 17-9-13.
+ */
+
+public class SplashActivity2 extends AppCompatActivity {
 
     private static final String TAG                 = "SplashActivity";
     private static final int SPLASH_TIME_MAX        = 5100; // ms
@@ -25,31 +32,40 @@ public class SplashActivity extends AppCompatActivity {
     private static final int SPLASH_IMAGE_PURPLE    = 3;
 
     private Timer mSplashTimer;
-    private SplashCountDownTimer mCountDownTimer;
-    private View mRootView;
+    private SplashActivity2.SplashCountDownTimer mCountDownTimer;
+    private ImageView mImageSplash;
     private TextView mTvSkip;
     private boolean isStarted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_splash2);
+        if (Build.VERSION.SDK_INT >= 21) {
+            View decorView = getWindow().getDecorView();
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setNavigationBarColor(Color.TRANSPARENT);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         init();
     }
 
     private void init() {
         mSplashTimer = new Timer();
-        mCountDownTimer = new SplashCountDownTimer(SPLASH_TIME_MAX, SPLASH_TIME_INTERVEL);
-        mRootView = findViewById(R.id.splash_root);
+        mCountDownTimer = new SplashActivity2.SplashCountDownTimer(SPLASH_TIME_MAX, SPLASH_TIME_INTERVEL);
+        mImageSplash = (ImageView) findViewById(R.id.splash_image);
         switch (new Random().nextInt(3) + 1) {
             case SPLASH_IMAGE_BLUE:
-                mRootView.setBackgroundResource(R.drawable.splash_whale_blue);
+                mImageSplash.setImageResource(R.drawable.splash_whale_blue);
                 break;
             case SPLASH_IMAGE_YELLOW:
-                mRootView.setBackgroundResource(R.drawable.splash_whale_yellow);
+                mImageSplash.setImageResource(R.drawable.splash_whale_yellow);
                 break;
             case SPLASH_IMAGE_PURPLE:
-                mRootView.setBackgroundResource(R.drawable.splash_whale_purple);
+                mImageSplash.setImageResource(R.drawable.splash_whale_purple);
                 break;
         }
         mTvSkip = (TextView) findViewById(R.id.skip_text);
@@ -89,7 +105,7 @@ public class SplashActivity extends AppCompatActivity {
             });
             mTvSkip.startAnimation(animation);
             mCountDownTimer.start();
-            mSplashTimer.schedule(new SplashTimerTask(), SPLASH_TIME_MAX);
+            mSplashTimer.schedule(new SplashActivity2.SplashTimerTask(), SPLASH_TIME_MAX);
             isStarted = true;
         }
     }
@@ -103,8 +119,9 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void lunchMart() {
-        startActivity(new Intent(SplashActivity.this, MartActivity.class));
-        SplashActivity.this.finish();
+        startActivity(new Intent(SplashActivity2.this, GuideActivity.class));
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        SplashActivity2.this.finish();
     }
 
 
@@ -156,10 +173,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        LogUtils.d(TAG, "splash: destroy");
         if (isStarted) {
-            mCountDownTimer.cancel();
-            mCountDownTimer = null;
             mSplashTimer.cancel();
             mSplashTimer = null;
         }
